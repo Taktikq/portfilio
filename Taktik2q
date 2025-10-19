@@ -1,0 +1,91 @@
+scores = []
+
+while True:
+    print("\nChoose action:")
+    print("1. Add a score")
+    print("2. Remove a score")
+    print("3. Sort scores")
+    print("4. Reverse scores")
+    print("5. Show statistics (max, min, average, total, length)")
+    print("6. Clear all scores")
+    print("0. Exit")
+    print(f"Current scores: {scores}")
+    try:
+        answer = int(input("\nEnter the number of the action you want to perform: "))
+    except ValueError:
+        print("Please enter a valid number!")
+        continue
+
+    if answer == 1:
+        try:
+            nums = input(f"Enter separately scores to add (comma-separated): ").split(", ")
+            nums = [int(n) for n in nums]
+            scores.extend(nums)
+            print("Scores added: ", nums)
+        except ValueError:
+            print("Invalid input. Please enter a valid number.")
+
+    elif answer == 2:
+        try:
+            nums = input("Enter separately the scores to remove(comma-separated): ").split(", ")
+            nums = [int(n) for n in nums]
+            for n in nums:
+                if n in scores:
+                    scores.remove(n)
+                else:
+                    print("Score not found:", n)
+        except ValueError:
+            print("Invalid input. Please enter valid numbers.")
+
+    elif answer == 3:
+        scores.sort()
+        print("Scores sorted:", scores)
+
+    elif answer == 4:
+        scores.reverse()
+        print("Scores reversed:", scores)
+
+    elif answer == 5:
+        if not scores:
+            print("No scores available to show statistics.")
+            continue
+        while True:
+             print("\nStatistics menu:")
+             print("1. Maximum score")
+             print("2. Minimum score")
+             print("3. Average score")
+             print("4. Total score")
+             print("5. Length of score list")
+             print("0. Back to main menu")
+
+             choices = input("Choose statistics (you can choose several, e.g. '1 3 5'): ").split()
+
+             if "0" in choices:
+                 print("Returning to main menu...")
+                 break
+
+             for choice in choices:
+                 if choice == "1":
+                     print("Maximum score:", max(scores))
+                 elif choice == "2":
+                     print("Minimum score:", min(scores))
+                 elif choice == "3":
+                     print("Average score:", sum(scores) / len(scores))
+                 elif choice == "4":
+                     print("Total score:", sum(scores))
+                 elif choice == "5":
+                     print("Length of score list:", len(scores))
+                 else:
+                     print("Invalid choice:", choice)
+                 print(f"Current scores: {scores}")
+    elif answer == 6:
+        scores.clear()
+        print("All scores cleared:", scores)
+
+    elif answer == 0:
+        print("Exiting the program.")
+        break
+
+    else:
+        print("Invalid action number. Please try again.")
+    
