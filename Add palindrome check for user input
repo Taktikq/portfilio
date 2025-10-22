@@ -1,0 +1,5 @@
+Sahyr = input("Enter the number: ")
+if Sahyr == Sahyr[::-1]:
+    print("YESSSS")
+else:
+    print("NOOOOOOOO")
