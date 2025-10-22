@@ -1,0 +1,6 @@
+array = []
+
+inf = input("Enter numbers separated by spaces: ").split()
+for i in inf:
+    array.append(int(i))
+print("Sum:", sum(array))
