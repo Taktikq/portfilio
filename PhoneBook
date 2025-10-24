@@ -1,0 +1,61 @@
+phone_book = {}
+print("Welcome to the Phone Book Application!")
+while True:
+    print("\nMenu:")
+    print("1. Add Contact")
+    print("2. Delete Contact or change Contact Details")
+    print("3. Search Contact")
+    print("4. View all contacts")
+    print("5. Exit")
+    choice = input("Choose an option (1-5): ")
+    if choice == '1':
+        name = input("Enter contact name: ")
+        phone = input("Enter contact phone number: ")
+        phone_book[name] = phone
+        print(f'{name} → {phone}')
+    elif choice == "2":
+        print("Choose action:")
+        print("1. Delete contact by name")
+        print("2. Change contact name")
+        print("3. Change contact phone number")
+        sub_choice = input("Choose an option (1-3): ")
+        if sub_choice == "1":
+            name = input("Enter contact name to delete: ")
+            if name in phone_book:
+                del phone_book[name]
+                print(f'Contact {name} deleted.')
+            else:
+                print(f"Contact {name} not found.")
+        elif sub_choice == "2":
+            old_name = input("Enter current contact name: ")
+            if old_name in phone_book:
+                new_name = input("Enter new contact name: ")
+                phone_book[new_name] = phone_book.pop(old_name)
+                print(f'Contact name changed from {old_name} to {new_name}.')
+            else:
+                print(f"Contact {old_name} not found.")
+        elif sub_choice == "3":
+            old_number = input("Enter current contact phone number: ")
+            if old_number in phone_book.values():
+                new_number = input("Enter new contact phone number: ")
+                phone_book[old_number] = new_number
+                print(f"Contact number changed from {old_number} to {new_number}.")
+            else:
+                print(f"Contact with number {old_number} not found.")
+                break
+    elif choice == '3':
+        name = input("Enter contact name to search: ")
+        if name in phone_book:
+            print(f'Contact found: {name} → {phone_book[name]}')
+        else:
+            print(f"Contact {name} not found.")
+    elif choice == '4':
+        if phone_book:
+            print("All contacts:")
+            for name, number in phone_book.items():
+                print(f'{name} → {number}')
+        else:
+            print("Phone book is empty.")
+    elif choice == '5':
+        print("Exiting the Phone Book Application. Goodbye!")
+        break
