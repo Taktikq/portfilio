@@ -1,0 +1,75 @@
+import json
+
+class User_data:
+    def __init__(self, username, password, email):
+        self.username = username
+        self.password = password
+        self.email = email
+    def display_info(self):
+        return f"Your username {self.username}, your email {self.email}"
+    def update_password(self, current_password, new_password):
+        if current_password != self.password:
+            return f"You wrote wrong password!"
+        else:
+            self.password = new_password
+            return "Password updated successfully!"
+class System:
+    def __init__(self):
+        self.users = []
+        self.filename = "users.json"
+        self.load_users()
+    def load_users(self):
+        try:
+            with open(self.filename, "r") as file:
+                data = json.load(file)
+                for user_dict in data:
+                    user = User_data(
+                      user_dict["username"],
+                      user_dict["password"],
+                      user_dict["email"]
+                )
+                    self.users.append(user)
+        except FileNotFoundError:
+            "File not found, starting with empty user list."
+    def save_user(self, user):
+        try:
+            with open(self.filename, "r") as file:
+                data = json.load(file)
+        except FileNotFoundError:
+                data = []
+        data.append({
+                    "username": user.username,
+                    "password": user.password,
+                    "email": user.email
+        })
+        with open(self.filename, "w") as file:
+            json.dump(data, file, indent=4)
+
+    def register_user(self):
+        ask_username = input("Enter username: ")
+        ask_password = input("Enter password: ")
+        ask_email = input("Enter email-address: ")
+        for user in self.users:
+            if user.username == ask_username:
+                print("Username is busy, create a similar username")
+                return
+            
+            
+        new_user = User_data(ask_username, ask_password, ask_email)
+        self.users.append(new_user)
+        self.save_user(new_user)
+        print("Register succesfull!")
+    def login_user(self):
+        ask_username = input("Enter username: ")
+        ask_password = input("Enter password: ")
+        for user in self.users:
+            if user.username == ask_username:
+                if user.password == ask_password:
+
+                    print(f"Hello {ask_username}, welcome back")
+                    return
+                else:
+                    print("Wrong password")
+                    return
+            
+        print("username not found!")
