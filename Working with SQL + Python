@@ -1,0 +1,49 @@
+from sqlalchemy import create_engine, Table, Column, Integer, String, MetaData, Float, insert, select, update, delete
+engine = create_engine('sqlite:///movies.db')
+
+metadata = MetaData()  # container for all tables
+
+movies = Table('movies', metadata,
+              Column('id', Integer, primary_key=True),
+              Column('title', String),
+              Column('genre', String),
+              Column('rating', Float),
+              Column('year', Integer)
+             )
+metadata.create_all(engine)
+
+
+
+with engine.connect() as conn:
+# 1 Clean (optional)  
+    conn.execute(movies.delete())
+# 2. Insert data
+    conn.execute(insert(movies).values(title='Interstellar', genre='Sci-Fi', rating=8.9, year=2014))
+
+    conn.execute(insert(movies).values(title='Inception', genre='Sci-Fi', rating=9.8, year=2010))
+
+    conn.execute(insert(movies).values(title='Titanic', genre='Drama', rating=7.6, year=1997))
+
+    conn.execute(insert(movies).values(title='Joker', genre='Drama', rating=9, year=2019))
+# 3 update
+    conn.execute(update(movies).where(movies.c.title == 'Titanic').values(rating=9))
+    
+    conn.execute(update(movies).where(movies.c.title == 'Joker').values(rating=10))
+
+ # 4. Delete unwanted data   
+    conn.execute(delete(movies).where(movies.c.rating < 9))
+    
+    conn.commit()
+# 5. Select (view result)    
+    
+    result = conn.execute(select(movies))
+    for row in result:
+        print(row)
+
+
+# remember this order:
+# 1. Clean (optional)
+# 2. Insert data
+# 3. Update data
+# 4. Delete unwanted data
+# 5. Select (view result)
