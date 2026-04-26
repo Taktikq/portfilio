@@ -1,0 +1,24 @@
+SQL
+CREATE TABLE movies (
+    id INTEGER,
+    title TEXT,
+    genre TEXT,
+    rating FLOAT,
+    year INT
+);
+INSERT INTO movies VALUES(1, 'Interstellar', 'Sci-Fi', 8.9, 2014);
+INSERT INTO movies VALUES(2, 'Inception', 'Sci-Fi', 9.8, 2010);
+INSERT INTO movies VALUES(3, 'Titanic', 'Drama', 7.6, 1997);
+INSERT INTO movies VALUES(4, 'Joker', 'Drama', 9, 2019);
+
+SELECT * FROM movies WHERE genre='Sci-Fi';
+SELECT * FROM movies WHERE rating > 8;
+
+UPDATE movies
+SET rating = 9
+WHERE title = 'Titanic';
+UPDATE movies
+SET rating = 10
+WHERE title = 'Joker';
+
+DELETE FROM movies WHERE rating < 9;
